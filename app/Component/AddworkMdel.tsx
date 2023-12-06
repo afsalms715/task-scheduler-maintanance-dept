@@ -6,11 +6,16 @@ type propModel={
     setModelShow:any;
     name:string;
     desig:string;
+    Id:number;
+    setTempDB:any;
+    tempDB:any;
 };
 
 const AddworkMdel:React.FC<propModel> = (props) => {
-    const {modelShow,setModelShow,name,desig}=props
-    const[formData,setFormData]=useState({name:name,desig:desig,endTime:"",startTime:"",workTime:""})
+    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB}=props
+    const[formData,setFormData]=useState({Id:Id,name:name,desig:desig,endTime:"",startTime:"",workTime:""})
+
+    //values save when changes happen
     const handleChanges=(e:any)=>{
         //console.log(e.target.name)
         //console.log(e.target.value)
@@ -29,6 +34,8 @@ const AddworkMdel:React.FC<propModel> = (props) => {
 
     const saveWork=()=>{
         console.log(formData)
+        setTempDB([...tempDB,formData])
+        console.log(tempDB)
     }
   return (
     <div className='fixed inset-0 z-10 flex  col justify-center items-center backdrop-blur-sm'>
