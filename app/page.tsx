@@ -52,7 +52,20 @@ export default function Home() {
               <th>Id</th>
               <th className='border'>Name</th>
               <th className='border'>Designation</th>
-              <th className='border'>Works</th>
+              <th className='border'>
+                <div>Works</div>
+                  <table className='w-full'>
+                        <thead>
+                          <tr>
+                              <th className='border w-[20%]'>Work Detail</th>
+                              <th className='border w-[20%]'>Location</th>
+                              <th className='border w-[20%]'>Start Time</th>
+                              <th className='border w-[20%]'>End Time</th>
+                              <th className='border w-[20%]'>Work Time</th>
+                          </tr>
+                        </thead>
+                  </table>
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -64,26 +77,28 @@ export default function Home() {
                   <td className='border'>{item.Name}</td>
                   <td className='border'>{item.Designation}</td>
                   <td className='w-[65%]'>
-                    <ul>
+                    <table className='w-full'>
+                      <tbody>
                       {
                         tempDB.map((work)=>{
                           if(work.Id==item.Id){
                             if(work.workDetails!=""){
                               return(
-                                <li className='border border-green-300 bg-slate-100 mb-[2px] flex'>
-                                  <p className='border border-red-300 mr-1 '>Work Detial : {work.workDetails}</p>
-                                  <p className='border  border-red-300 mr-1'>Location : {work.workLocation}</p>
-                                  <p className='border  border-red-300 mr-1'>Start Time : {work.startTime}</p>
-                                  <p className='border  border-red-300 mr-1'>End Time : {work.endTime}</p>
-                                  <p className='border  border-red-300 mr-1'>Work Time : {work.workTime}</p>
-                                </li>
+                                <tr className='border border-green-300 bg-slate-100 mb-[2px]'>
+                                  <td className='border border-red-300 mr-1 w-[20%] '>{work.workDetails}</td>
+                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.workLocation}</td>
+                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.startTime}</td>
+                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.endTime}</td>
+                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.workTime}</td>
+                                </tr>
                               )
                             }
                           }
                         })
                       
                       }
-                    </ul>
+                      </tbody>
+                    </table>
                   </td>
                   <td className='border p-1'>
                     <button onClick={()=>{
