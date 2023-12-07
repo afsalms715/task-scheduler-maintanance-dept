@@ -122,9 +122,9 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {employees.map((item)=>{
+            {employees.map((item,index)=>{
               return(
-                <tr className='border'>
+                <tr className='border' key={index}>
                   <td>{item.Id}</td>
                   <td className='border'>{item.Name}</td>
                   <td className='border'>{item.Designation}</td>
@@ -132,11 +132,11 @@ export default function Home() {
                     <table className='w-full'>
                       <tbody>
                       {
-                        tempDB.map((work)=>{
+                        tempDB.map((work,index)=>{
                           if(work.Id==item.Id){
                             if(work.workDetails!=""){
                               return(
-                                <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)}>
+                                <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)} key={index}>
                                   <td className='border border-red-300 mr-1 w-[20%] '>{work.workDetails}</td>
                                   <td className='border  border-red-300 mr-1 w-[20%]'>{work.workLocation}</td>
                                   <td className='border  border-red-300 mr-1 w-[20%]'>{work.startTime}</td>
