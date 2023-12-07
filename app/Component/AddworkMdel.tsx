@@ -24,9 +24,19 @@ const AddworkMdel:React.FC<propModel> = (props) => {
     
     //values save when changes happen
     const handleChanges=(e:any)=>{
-        //console.log(e.target.name)
-        //console.log(e.target.value)
         setFormData({...formData,[e.target.name]:e.target.value})
+    }
+
+    //form validation 
+    const formValidation=()=>{
+        let flag=false;
+        if(formData.startTime=="" || formData.endTime=="" || formData.workDetails=="" || formData.workLocation==""){
+            flag=false
+            alert("you missing to input some data fields please check !")
+        }else{
+            flag=true
+        }
+        return flag
     }
 
     //calculate work time
@@ -40,26 +50,26 @@ const AddworkMdel:React.FC<propModel> = (props) => {
     },[formData.endTime,formData.startTime])
 
     const saveWork=()=>{
-        console.log(formData)
-        console.log(tempDB.length)
-        formData.workId=tempDB.length+1
-        setTempDB([...tempDB,formData])
-        console.log(tempDB)
+        if(formValidation()){
+            console.log(formData)
+            console.log(tempDB.length)
+            formData.workId=tempDB.length+1
+            setTempDB([...tempDB,formData])
+            console.log(tempDB)
+        }
     }
 
     const updateWork=()=>{
-        tempDB.map((work:any)=>{
-            console.log(formData.workId)
-            console.log(work)
-            if(formData.workId==work.workId){
-                console.log("tempDb updation")
-                console.log(work)
-                work.workDetails=formData.workDetails
-                work.endTime=formData.endTime 
-                work.startTime=formData.startTime
-                work.workLocation=formData.workLocation
-            }
-        })
+        if(formValidation()){
+            tempDB.map((work:any)=>{
+                if(formData.workId==work.workId){
+                    work.workDetails=formData.workDetails
+                    work.endTime=formData.endTime 
+                    work.startTime=formData.startTime
+                    work.workLocation=formData.workLocation
+                }
+            })
+        }
     }
   return (
     <div className='fixed inset-0 z-10 flex  col justify-center items-center backdrop-blur-sm'>

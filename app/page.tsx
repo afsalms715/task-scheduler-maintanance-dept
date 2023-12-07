@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import AddworkMdel from './Component/AddworkMdel'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   let employees=[
@@ -37,8 +37,28 @@ export default function Home() {
   const[workLocation,setWorkLocation]=useState("")
   const[isUpdate,setIsUpdate]=useState(false)
   const[workId,setWorkId]=useState(0)
+  const[workDate,setWorkDate]=useState('')
   const[tempDB,setTempDB]=useState([{Id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
   let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,isUpdate,workId,setTempDB,tempDB,}
+
+  //set system date as default date
+  useEffect(()=>{
+    const dateObj=new Date()
+    let date=dateObj.getDate()
+    let month=dateObj.getMonth()
+    let year=dateObj.getFullYear()
+    let strDate=`${date}`
+    let strMonth=`${month}`
+    if(date<10){
+      strDate=`0${date}`
+    }
+    if(month<10){
+      strMonth=`0${strMonth}`
+    }
+    const sysdate=`${year}-${strMonth}-${strDate}`
+    setWorkDate(sysdate)
+  },[])
+
   const showModel=({Name,Desig,Id}:any)=>{
     setEmpId(Id)
     setEmpName(Name)
@@ -65,12 +85,18 @@ export default function Home() {
     setIsUpdate(true)
     setModelShow(true)
   }
+
+  //save to db
+  const saveToDb=()=>{
+    console.log(tempDB)
+  }
+
   return (
     <div className='mt-10'>
       <div className='m-20'>
         <div className=''>
           <p>Work Date</p>
-          <input type='date' className='border w-60 p-1 rounded-md'/>
+          <input type='date' value={workDate} onChange={(e:any)=>setWorkDate(e.target.value)} className='border w-60 p-1 rounded-md'/>
         </div>
         <table className='mt-5 border w-full'>
           <thead className='border'>
@@ -92,7 +118,7 @@ export default function Home() {
                         </thead>
                   </table>
               </th>
-              <th></th>
+              <th><button className='border bg-green-300 rounded-md p-1 text-xs m-1' onClick={()=>saveToDb()}>SAVE CHANGES</button></th>
             </tr>
           </thead>
           <tbody>
