@@ -31,12 +31,38 @@ export default function Home() {
   const[empName,setEmpName]=useState("")
   const[empDesig,setEmpDesig]=useState("")
   const[empId,setEmpId]=useState(0)
+  const[workDetl,setWorkDetl]=useState("")
+  const[startTime,setStartTime]=useState("")
+  const[endTime,setEndTime]=useState("")
+  const[workLocation,setWorkLocation]=useState("")
+  const[isUpdate,setIsUpdate]=useState(false)
+  const[workId,setWorkId]=useState(0)
   const[tempDB,setTempDB]=useState([{Id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
-  let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,setTempDB,tempDB}
+  let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,isUpdate,workId,setTempDB,tempDB,}
   const showModel=({Name,Desig,Id}:any)=>{
     setEmpId(Id)
     setEmpName(Name)
     setEmpDesig(Desig)
+    setWorkDetl("")
+    setStartTime("")
+    setEndTime("")
+    setWorkLocation("")
+    setIsUpdate(false)
+    setModelShow(true)
+  }
+  
+  //show model for updation
+  const showUpdateModel=(work:any)=>{
+    console.log(work)
+    setEmpId(work.Id)
+    setEmpName(work.name)
+    setEmpDesig(work.desig)
+    setWorkDetl(work.workDetails)
+    setStartTime(work.startTime)
+    setEndTime(work.endTime)
+    setWorkLocation(work.workLocation)
+    setWorkId(work.workId)
+    setIsUpdate(true)
     setModelShow(true)
   }
   return (
@@ -84,7 +110,7 @@ export default function Home() {
                           if(work.Id==item.Id){
                             if(work.workDetails!=""){
                               return(
-                                <tr className='border border-green-300 bg-slate-100 mb-[2px]'>
+                                <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)}>
                                   <td className='border border-red-300 mr-1 w-[20%] '>{work.workDetails}</td>
                                   <td className='border  border-red-300 mr-1 w-[20%]'>{work.workLocation}</td>
                                   <td className='border  border-red-300 mr-1 w-[20%]'>{work.startTime}</td>

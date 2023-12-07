@@ -1,3 +1,4 @@
+'use client'
 import { fork } from 'child_process';
 import React,{useState,useEffect} from 'react'
 
@@ -9,12 +10,18 @@ type propModel={
     Id:number;
     setTempDB:any;
     tempDB:any;
+    workDetl:string;
+    startTime:string;
+    endTime:string;
+    workLocation:string;
+    isUpdate:boolean;
+    workId:number;
 };
 
 const AddworkMdel:React.FC<propModel> = (props) => {
-    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB}=props
-    const[formData,setFormData]=useState({Id:Id,name:name,desig:desig,endTime:"",startTime:"",workTime:""})
-
+    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId}=props
+    const[formData,setFormData]=useState({workId:workId,Id:Id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation})
+    
     //values save when changes happen
     const handleChanges=(e:any)=>{
         //console.log(e.target.name)
@@ -34,8 +41,25 @@ const AddworkMdel:React.FC<propModel> = (props) => {
 
     const saveWork=()=>{
         console.log(formData)
+        console.log(tempDB.length)
+        formData.workId=tempDB.length+1
         setTempDB([...tempDB,formData])
         console.log(tempDB)
+    }
+
+    const updateWork=()=>{
+        tempDB.map((work:any)=>{
+            console.log(formData.workId)
+            console.log(work)
+            if(formData.workId==work.workId){
+                console.log("tempDb updation")
+                console.log(work)
+                work.workDetails=formData.workDetails
+                work.endTime=formData.endTime 
+                work.startTime=formData.startTime
+                work.workLocation=formData.workLocation
+            }
+        })
     }
   return (
     <div className='fixed inset-0 z-10 flex  col justify-center items-center backdrop-blur-sm'>
@@ -55,7 +79,7 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                 </div>
                 <div className='m-1 w-[230px] h-[34px]'>
                     <p className='text-sm'>Work Location</p>
-                    <select name="workLocation" className='border border-gray-300 p-1 rounded-md w-full'  placeholder='designation' onChange={(e)=>handleChanges(e)}>
+                    <select name="workLocation" value={formData.workLocation} className='border border-gray-300 p-1 rounded-md w-full'  placeholder='designation' onChange={(e)=>handleChanges(e)}>
                         <option value="">select</option>
                         <option>Grand Mall</option>
                         <option>Ezdan</option>
@@ -69,11 +93,11 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                 </div>
                 <div className='m-1 w-[230px] h-[34px]'>
                     <p className='text-sm'>Start Time</p>
-                    <input name="startTime" className='border border-gray-300 p-1 rounded-md w-full' type='time' placeholder='' onChange={(e)=>handleChanges(e)}/>
+                    <input name="startTime" value={formData.startTime} className='border border-gray-300 p-1 rounded-md w-full' type='time' placeholder='' onChange={(e)=>handleChanges(e)}/>
                 </div>
                 <div className='m-1 w-[230px] h-[34px]'>
                     <p className='text-sm'>End Time</p>
-                    <input name="endTime" className='border border-gray-300 p-1 rounded-md w-full' type='time' placeholder='' onChange={(e)=>handleChanges(e)} />
+                    <input name="endTime" value={formData.endTime} className='border border-gray-300 p-1 rounded-md w-full' type='time' placeholder='' onChange={(e)=>handleChanges(e)} />
                 </div>
                 <div className='m-1'>
                     <p className='text-sm'>Work Time</p>
@@ -81,10 +105,13 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                 </div>
                 <div className='m-1 w-full px-10'>
                     <p className='text-sm'>Work Details</p>
-                    <textarea name="workDetails"  className='border border-gray-300 p-1 rounded-md w-full h-[100px]'  placeholder='work details' onChange={(e)=>handleChanges(e)}/>
+                    <textarea name="workDetails" value={formData.workDetails} className='border border-gray-300 p-1 rounded-md w-full h-[100px]'  placeholder='work details' onChange={(e)=>handleChanges(e)}/>
                 </div>
                 <div className='m-1 w-full px-10'>                 
-                    <button onClick={()=>{saveWork();setModelShow(false)}} className='border border-gray-300 p-1 w-full bg-blue-300 rounded-md'>SAVE</button>
+                    {isUpdate?
+                        <button onClick={()=>{updateWork();setModelShow(false)}} className='border border-gray-300 p-1 w-full bg-red-300 rounded-md'>UPDATE</button>:
+                        <button onClick={()=>{saveWork();setModelShow(false)}} className='border border-gray-300 p-1 w-full bg-blue-300 rounded-md'>SAVE</button>
+                    }
                 </div>
             </div>
         </div>  
