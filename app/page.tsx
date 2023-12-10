@@ -4,29 +4,29 @@ import AddworkMdel from './Component/AddworkMdel'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
-  let employees=[
-    { "Id": 1, "Name": "Sakthivel Rangarajan", "Designation": "Ac Technician" },
-    { "Id": 2, "Name": "Sanoj Puthenpurayil", "Designation": "Ac Technician" },
-    { "Id": 3, "Name": "Keerthan Yerumbu", "Designation": "Ac Technician" },
-    { "Id": 4, "Name": "Gurusamy Murugesan", "Designation": "Ac Technician" },
-    { "Id": 5, "Name": "Muhammed Mufeed Thalappil", "Designation": "Ac Technician Trainee" },
-    { "Id": 6, "Name": "Fawas Rahman Parasuraman Kunnath", "Designation": "Ac Technician Trainee" },
-    { "Id": 7, "Name": "Manikandan Vailissery Parambil", "Designation": "Carpenter" },
-    { "Id": 8, "Name": "Baiju Thuruthiyil Thazhe Kuniyil", "Designation": "Carpenter" },
-    { "Id": 9, "Name": "Shamsudheen Ali", "Designation": "Carpenter Helper" },
-    { "Id": 10, "Name": "Ajnas Chukkan Amsa", "Designation": "Chiller&Freezer Technician" },
-    { "Id": 11, "Name": "Suresh Kumar Elanthiraiyan", "Designation": "Electrician" },
-    { "Id": 12, "Name": "Sivaprakasam Muniyan", "Designation": "Electrician" },
-    { "Id": 13, "Name": "Mohamed Aslam Mohamed Farooq", "Designation": "Electrician Cum Plumber" },
-    { "Id": 14, "Name": "Mohammad Shiyas Azheekkal Nalakath", "Designation": "Helper Maintanace" },
-    { "Id": 15, "Name": "Mohammed Athuif", "Designation": "Maintenance Helper" },
-    { "Id": 16, "Name": "Prince Anto Aruldhas", "Designation": "Mason" },
-    { "Id": 17, "Name": "Pravin Kumar John", "Designation": "Mason Block/Tile" },
-    { "Id": 18, "Name": "Shardin Chanayil Joseph", "Designation": "Painter" },
-    { "Id": 19, "Name": "Ajith J S", "Designation": "Painter" },
-    { "Id": 20, "Name": "Rajesh Vylipatt", "Designation": "Tile Worker" },
-    { "Id": 21, "Name": "Rahmathulla Vadakke Arayantakathe", "Designation": "Tile Worker" }
-  ];
+  const[employees,setEmployees]=useState([
+    { "id": 1, "name": "Sakthivel Rangarajan", "designation": "Ac Technician" },
+  ]);
+  /*{ "id": 2, "name": "Sanoj Puthenpurayil", "designation": "Ac Technician" },
+    { "id": 3, "name": "Keerthan Yerumbu", "designation": "Ac Technician" },
+    { "id": 4, "name": "Gurusamy Murugesan", "designation": "Ac Technician" },
+    { "id": 5, "name": "Muhammed Mufeed Thalappil", "designation": "Ac Technician Trainee" },
+    { "id": 6, "name": "Fawas Rahman Parasuraman Kunnath", "designation": "Ac Technician Trainee" },
+    { "id": 7, "name": "Manikandan Vailissery Parambil", "designation": "Carpenter" },
+    { "id": 8, "name": "Baiju Thuruthiyil Thazhe Kuniyil", "designation": "Carpenter" },
+    { "id": 9, "name": "Shamsudheen Ali", "designation": "Carpenter Helper" },
+    { "id": 10, "name": "Ajnas Chukkan Amsa", "designation": "Chiller&Freezer Technician" },
+    { "id": 11, "name": "Suresh Kumar Elanthiraiyan", "designation": "Electrician" },
+    { "id": 12, "name": "Sivaprakasam Muniyan", "designation": "Electrician" },
+    { "id": 13, "name": "Mohamed Aslam Mohamed Farooq", "designation": "Electrician Cum Plumber" },
+    { "id": 14, "name": "Mohammad Shiyas Azheekkal Nalakath", "designation": "Helper Maintanace" },
+    { "id": 15, "name": "Mohammed Athuif", "designation": "Maintenance Helper" },
+    { "id": 16, "name": "Prince Anto Aruldhas", "designation": "Mason" },
+    { "id": 17, "name": "Pravin Kumar John", "designation": "Mason Block/Tile" },
+    { "id": 18, "name": "Shardin Chanayil Joseph", "designation": "Painter" },
+    { "id": 19, "name": "Ajith J S", "designation": "Painter" },
+    { "id": 20, "name": "Rajesh Vylipatt", "designation": "Tile Worker" },
+    { "id": 21, "name": "Rahmathulla Vadakke Arayantakathe", "designation": "Tile Worker" }*/
   const[modelShow,setModelShow]=useState(false)
   const[empName,setEmpName]=useState("")
   const[empDesig,setEmpDesig]=useState("")
@@ -40,6 +40,17 @@ export default function Home() {
   const[workDate,setWorkDate]=useState('')
   const[tempDB,setTempDB]=useState([{Id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
   let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,isUpdate,workId,setTempDB,tempDB,}
+
+  //employee data fetching from api
+  const employeeFetch=async ()=>{
+    const responce=await fetch('https://localhost:44376/api/WorkScheduler/MNTC_employees');
+    const data=await responce.json()
+    console.log(data)
+    setEmployees(data)
+  }
+  useEffect(()=>{
+    employeeFetch();
+  },[])
 
   //set system date as default date
   useEffect(()=>{
@@ -125,15 +136,15 @@ export default function Home() {
             {employees.map((item,index)=>{
               return(
                 <tr className='border' key={index}>
-                  <td>{item.Id}</td>
-                  <td className='border'>{item.Name}</td>
-                  <td className='border'>{item.Designation}</td>
+                  <td>{item.id}</td>
+                  <td className='border'>{item.name}</td>
+                  <td className='border'>{item.designation}</td>
                   <td className='w-[65%]'>
                     <table className='w-full'>
                       <tbody>
                       {
                         tempDB.map((work,index)=>{
-                          if(work.Id==item.Id){
+                          if(work.Id==item.id){
                             if(work.workDetails!=""){
                               return(
                                 <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)} key={index}>
@@ -154,7 +165,7 @@ export default function Home() {
                   </td>
                   <td className='border p-1'>
                     <button onClick={()=>{
-                        showModel({Id:item.Id,Name:item.Name,Desig:item.Designation})
+                        showModel({Id:item.id,Name:item.name,Desig:item.designation})
                       }} className='ml-1 p-1 border border-[2px] border-gray-200 hover:bg-slate-200 rounded-md'>Add Work</button>
                   </td>
                 </tr>
