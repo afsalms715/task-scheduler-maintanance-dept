@@ -39,7 +39,7 @@ export default function Home() {
   const[workId,setWorkId]=useState(0)
   const[workDate,setWorkDate]=useState('')
   const[tempDB,setTempDB]=useState([{Id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
-  let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,isUpdate,workId,setTempDB,tempDB,}
+  let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,workDate,isUpdate,workId,setTempDB,tempDB,}
 
   //employee data fetching from api
   const employeeFetch=async ()=>{
@@ -99,6 +99,7 @@ export default function Home() {
 
   //save to db
   const saveToDb=()=>{
+    console.log(workDate)
     console.log(tempDB)
   }
 

@@ -16,10 +16,11 @@ type propModel={
     workLocation:string;
     isUpdate:boolean;
     workId:number;
+    workDate:string;
 };
 
 const AddworkMdel:React.FC<propModel> = (props) => {
-    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId}=props
+    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId,workDate}=props
     const[formData,setFormData]=useState({workId:workId,Id:Id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation})
     
     //values save when changes happen
@@ -56,6 +57,15 @@ const AddworkMdel:React.FC<propModel> = (props) => {
             formData.workId=tempDB.length+1
             setTempDB([...tempDB,formData])
             console.log(tempDB)
+            var requestOptions:any = {
+                method: 'POST',
+                redirect: 'follow'
+              };
+              
+              fetch(`https://localhost:44376/api/WorkScheduler/MNTC_add_work?workDate=${workDate}&JsonData=${JSON.stringify(formData)}`, requestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));             
         }
     }
 
