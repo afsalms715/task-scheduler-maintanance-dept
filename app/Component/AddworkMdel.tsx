@@ -7,7 +7,7 @@ type propModel={
     setModelShow:any;
     name:string;
     desig:string;
-    Id:number;
+    id:number;
     setTempDB:any;
     tempDB:any;
     workDetl:string;
@@ -20,8 +20,8 @@ type propModel={
 };
 
 const AddworkMdel:React.FC<propModel> = (props) => {
-    const {modelShow,setModelShow,name,desig,Id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId,workDate}=props
-    const[formData,setFormData]=useState({workId:workId,Id:Id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation})
+    const {modelShow,setModelShow,name,desig,id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId,workDate}=props
+    const[formData,setFormData]=useState({workId:workId,id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation,Id:0})
     
     //values save when changes happen
     const handleChanges=(e:any)=>{
@@ -53,8 +53,10 @@ const AddworkMdel:React.FC<propModel> = (props) => {
     const saveWork=()=>{
         if(formValidation()){
             console.log(formData)
+            console.log(id)
             console.log(tempDB.length)
             formData.workId=tempDB.length+1
+            formData.Id=formData.id
             setTempDB([...tempDB,formData])
             console.log(tempDB)
             var requestOptions:any = {

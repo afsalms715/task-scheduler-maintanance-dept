@@ -38,8 +38,8 @@ export default function Home() {
   const[isUpdate,setIsUpdate]=useState(false)
   const[workId,setWorkId]=useState(0)
   const[workDate,setWorkDate]=useState('')
-  const[tempDB,setTempDB]=useState([{Id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
-  let props={Id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,workDate,isUpdate,workId,setTempDB,tempDB,}
+  const[tempDB,setTempDB]=useState([{id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
+  let props={id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,workDate,isUpdate,workId,setTempDB,tempDB,}
 
   //employee data fetching from api
   const employeeFetch=async ()=>{
@@ -48,15 +48,25 @@ export default function Home() {
     console.log(data)
     setEmployees(data)
   }
+
+  const worksFetch=async ()=>{
+    const responce=await fetch(`https://localhost:44376/api/WorkScheduler/MNTC_works?workDate=${workDate}`);
+    const data=await responce.json()
+    console.log(data)
+    setTempDB(data)
+  }
   useEffect(()=>{
     employeeFetch();
   },[])
+  useEffect(()=>{
+    worksFetch();
+  },[workDate])
 
   //set system date as default date
   useEffect(()=>{
     const dateObj=new Date()
     let date=dateObj.getDate()
-    let month=dateObj.getMonth()
+    let month=dateObj.getMonth()+1
     let year=dateObj.getFullYear()
     let strDate=`${date}`
     let strMonth=`${month}`
@@ -67,11 +77,13 @@ export default function Home() {
       strMonth=`0${strMonth}`
     }
     const sysdate=`${year}-${strMonth}-${strDate}`
+    console.log(sysdate)
     setWorkDate(sysdate)
+    worksFetch()
   },[])
 
-  const showModel=({Name,Desig,Id}:any)=>{
-    setEmpId(Id)
+  const showModel=({Name,Desig,id}:any)=>{
+    setEmpId(id)
     setEmpName(Name)
     setEmpDesig(Desig)
     setWorkDetl("")
@@ -85,7 +97,7 @@ export default function Home() {
   //show model for updation
   const showUpdateModel=(work:any)=>{
     console.log(work)
-    setEmpId(work.Id)
+    setEmpId(work.id)
     setEmpName(work.name)
     setEmpDesig(work.desig)
     setWorkDetl(work.workDetails)
@@ -145,7 +157,7 @@ export default function Home() {
                       <tbody>
                       {
                         tempDB.map((work,index)=>{
-                          if(work.Id==item.id){
+                          if(work.id==item.id){
                             if(work.workDetails!=""){
                               return(
                                 <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)} key={index}>
@@ -166,7 +178,7 @@ export default function Home() {
                   </td>
                   <td className='border p-1'>
                     <button onClick={()=>{
-                        showModel({Id:item.id,Name:item.name,Desig:item.designation})
+                        showModel({id:item.id,Name:item.name,Desig:item.designation})
                       }} className='ml-1 p-1 border border-[2px] border-gray-200 hover:bg-slate-200 rounded-md'>Add Work</button>
                   </td>
                 </tr>
