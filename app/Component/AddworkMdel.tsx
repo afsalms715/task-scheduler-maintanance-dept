@@ -1,5 +1,4 @@
 'use client'
-import { fork } from 'child_process';
 import React,{useState,useEffect} from 'react'
 
 type propModel={
@@ -52,9 +51,6 @@ const AddworkMdel:React.FC<propModel> = (props) => {
 
     const saveWork=()=>{
         if(formValidation()){
-            console.log(formData)
-            console.log(id)
-            console.log(tempDB.length)
             formData.workId=tempDB.length+1
             formData.Id=formData.id
             setTempDB([...tempDB,formData])
@@ -79,8 +75,19 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                     work.endTime=formData.endTime 
                     work.startTime=formData.startTime
                     work.workLocation=formData.workLocation
+                    work.workTime=formData.workTime
                 }
             })
+            console.log(formData)
+            formData.Id=formData.id
+            var requestOptions:any = {
+                method: 'POST',
+                redirect: 'follow'
+              };
+              
+              fetch(`https://localhost:44376/api/WorkScheduler/MNTC_update_work?JsonData=${JSON.stringify(formData)}`, requestOptions)
+                .then(response => console.log(response))
+                
         }
     }
   return (

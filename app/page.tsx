@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import AddworkMdel from './Component/AddworkMdel'
+import MenuBar from './Component/MenuBar'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
@@ -41,6 +42,10 @@ export default function Home() {
   const[tempDB,setTempDB]=useState([{id:0,workDetails:"",workLocation:"",startTime:"",endTime:"",workTime:""}])
   let props={id:empId,modelShow,setModelShow,name:empName,desig:empDesig,startTime,endTime,workDetl,workLocation,workDate,isUpdate,workId,setTempDB,tempDB,}
 
+  //state for menu bar
+  const[activeBtn,setActiveBtn]=useState('workScheduler')
+  const propMenu={activeBtn,setActiveBtn}
+
   //employee data fetching from api
   const employeeFetch=async ()=>{
     const responce=await fetch('https://localhost:44376/api/WorkScheduler/MNTC_employees');
@@ -52,8 +57,10 @@ export default function Home() {
   const worksFetch=async ()=>{
     const responce=await fetch(`https://localhost:44376/api/WorkScheduler/MNTC_works?workDate=${workDate}`);
     const data=await responce.json()
-    console.log(data)
-    setTempDB(data)
+    console.log(data.status)
+    if(!data.status){
+      setTempDB(data)
+    }
   }
   useEffect(()=>{
     employeeFetch();
@@ -109,18 +116,13 @@ export default function Home() {
     setModelShow(true)
   }
 
-  //save to db
-  const saveToDb=()=>{
-    console.log(workDate)
-    console.log(tempDB)
-  }
-
   return (
-    <div className='mt-10'>
-      <div className='m-20'>
+    <div className='mt-10 flex '>
+      {<MenuBar {...propMenu}/>}
+      <div className='m-5 w-[90%]'>
         <div className=''>
-          <p>Work Date</p>
-          <input type='date' value={workDate} onChange={(e:any)=>setWorkDate(e.target.value)} className='border w-60 p-1 rounded-md'/>
+          <p className='text-sm'>Work Date</p>
+          <input type='date' value={workDate} onChange={(e:any)=>setWorkDate(e.target.value)} className='border w-60 p-1 rounded-md text-sm'/>
         </div>
         <table className='mt-5 border w-full'>
           <thead className='border'>
@@ -142,16 +144,16 @@ export default function Home() {
                         </thead>
                   </table>
               </th>
-              <th><button className='border bg-green-300 rounded-md p-1 text-xs m-1' onClick={()=>saveToDb()}>SAVE CHANGES</button></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {employees.map((item,index)=>{
               return(
                 <tr className='border' key={index}>
-                  <td>{item.id}</td>
-                  <td className='border'>{item.name}</td>
-                  <td className='border'>{item.designation}</td>
+                  <td className='text-sm'>{item.id}</td>
+                  <td className='border text-sm'>{item.name}</td>
+                  <td className='border text-sm'>{item.designation}</td>
                   <td className='w-[65%]'>
                     <table className='w-full'>
                       <tbody>
@@ -160,12 +162,12 @@ export default function Home() {
                           if(work.id==item.id){
                             if(work.workDetails!=""){
                               return(
-                                <tr className='border border-green-300 bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)} key={index}>
-                                  <td className='border border-red-300 mr-1 w-[20%] '>{work.workDetails}</td>
-                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.workLocation}</td>
-                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.startTime}</td>
-                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.endTime}</td>
-                                  <td className='border  border-red-300 mr-1 w-[20%]'>{work.workTime}</td>
+                                <tr className='border  bg-slate-100 mb-[2px]' onClick={()=>showUpdateModel(work)} key={index}>
+                                  <td className='border  mr-1 w-[20%] text-sm'>{work.workDetails}</td>
+                                  <td className='border   mr-1 w-[20%] text-sm'>{work.workLocation}</td>
+                                  <td className='border   mr-1 w-[20%] text-sm'>{work.startTime}</td>
+                                  <td className='border   mr-1 w-[20%] text-sm'>{work.endTime}</td>
+                                  <td className='border   mr-1 w-[20%] text-sm'>{work.workTime}</td>
                                 </tr>
                               )
                             }
@@ -179,7 +181,7 @@ export default function Home() {
                   <td className='border p-1'>
                     <button onClick={()=>{
                         showModel({id:item.id,Name:item.name,Desig:item.designation})
-                      }} className='ml-1 p-1 border border-[2px] border-gray-200 hover:bg-slate-200 rounded-md'>Add Work</button>
+                      }} className='ml-1 p-1 border border-[2px] border-gray-200 hover:bg-slate-200 rounded-md text-sm'>Add Work</button>
                   </td>
                 </tr>
               )
