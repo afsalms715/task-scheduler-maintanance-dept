@@ -43,8 +43,8 @@ const WorkReport:React.FC<propModel> = ({employees}) => {
                     <label className='text-sm block'>Employee</label>
                     <select name='employeeId' onChange={(e)=>handleChnages(e)} className='border w-60 p-[5px] text-sm rounded-md'>
                         <option value="">select</option>
-                        {employees.map((item:any)=>{
-                            return <option value={item.id}>{item.name}</option>
+                        {employees.map((item:any,index:number)=>{
+                            return <option key={index} value={item.id}>{item.name}</option>
                         })}
                     </select>    
                 </div>
