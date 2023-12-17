@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import AddworkMdel from './Component/AddworkMdel'
 import MenuBar from './Component/MenuBar'
+import WorkReport from './Component/WorkReport'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
@@ -119,7 +120,7 @@ export default function Home() {
   return (
     <div className='mt-10 flex '>
       {<MenuBar {...propMenu}/>}
-      <div className='m-5 w-[90%]'>
+      {activeBtn=='workScheduler'?<div className='m-5 w-[90%]'>
         <div className=''>
           <p className='text-sm'>Work Date</p>
           <input type='date' value={workDate} onChange={(e:any)=>setWorkDate(e.target.value)} className='border w-60 p-1 rounded-md text-sm'/>
@@ -188,7 +189,8 @@ export default function Home() {
             })}
           </tbody>
         </table>
-      </div>
+      </div>:
+      <WorkReport employees={employees}/>}
       {modelShow &&
       <AddworkMdel {...props}/>}
     </div>
