@@ -22,39 +22,24 @@ type propModel={
 }
 
 const Datatable:React.FC<propModel> = ({reportData,dtStatus,setDtStatus,dtState,setDtState}) => {
-    console.log(reportData)
     const tableRef:any=useRef('table')
-    const dataTableRef = useRef(null);
-
-    const[tableState,setTableState]=useState(false);
     let table:any=dtState
     const DTinitialization=(reportData:any)=>{ 
-            console.log("table declaring")
             table = new DataTable(tableRef.current, {
                 dom: 'Bfrtip',
                 processing: true,
                 data:reportData,
                 columns: [
-                    // { data: 'id' },
-                    // { data: 'name' },
-                    // { data: 'desig' },
-                    // { data: 'workDate' },
-                    // { data: 'workId' },
-                    // { data: 'startTime' },
-                    // { data: 'endTime' },
-                    // { data: 'workTime' },
-                    // { data: 'workLocation' },
-                    // { data: 'workDetails' },
-                    { title: 'id', data: 'id' },
-                    { title: 'name', data: 'name' },           
-                    { title: 'desig', data: 'desig' },
-                    { title: 'workDate', data: 'workDate' },
-                    { title: 'workId', data: 'workId' },
-                    { title: 'startTime', data: 'startTime' },           
-                    { title: 'endTime', data: 'endTime' },
-                    { title: 'workTime', data: 'workTime' },
-                    { title: 'workLocation', data: 'workLocation' },
-                    { title: 'workDetails', data: 'workDetails' }
+                    { title: 'Emp Id', data: 'id' },
+                    { title: 'Employee Name', data: 'name' },           
+                    { title: 'Designation', data: 'desig' },
+                    { title: 'Work Date', data: 'workDate' },
+                    { title: 'Work Id', data: 'workId' },
+                    { title: 'Start Time', data: 'startTime' },           
+                    { title: 'End Time', data: 'endTime' },
+                    { title: 'Work Time', data: 'workTime' },
+                    { title: 'Work Location', data: 'workLocation' },
+                    { title: 'Work Details', data: 'workDetails' }
                 ],
                 buttons: [
                     'copy','csv','print'
@@ -65,7 +50,6 @@ const Datatable:React.FC<propModel> = ({reportData,dtStatus,setDtStatus,dtState,
     }
     
     useEffect(()=>{
-        console.log(table)
         if(!table && !dtStatus){
             DTinitialization(reportData)
             setDtStatus(true);

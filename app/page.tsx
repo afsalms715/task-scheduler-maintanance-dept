@@ -49,14 +49,14 @@ export default function Home() {
 
   //employee data fetching from api
   const employeeFetch=async ()=>{
-    const responce=await fetch('https://localhost:44376/api/WorkScheduler/MNTC_employees');
+    const responce=await fetch('http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_employees');
     const data=await responce.json()
     console.log(data)
     setEmployees(data)
   }
 
   const worksFetch=async ()=>{
-    const responce=await fetch(`https://localhost:44376/api/WorkScheduler/MNTC_works?workDate=${workDate}`);
+    const responce=await fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_works?workDate=${workDate}`);
     const data=await responce.json()
     console.log(data.status)
     if(!data.status){

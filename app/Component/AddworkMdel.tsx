@@ -60,7 +60,7 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                 redirect: 'follow'
               };
               
-              fetch(`https://localhost:44376/api/WorkScheduler/MNTC_add_work?workDate=${workDate}&JsonData=${JSON.stringify(formData)}`, requestOptions)
+              fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_add_work?workDate=${workDate}&JsonData=${JSON.stringify(formData)}`, requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));             
@@ -85,7 +85,7 @@ const AddworkMdel:React.FC<propModel> = (props) => {
                 redirect: 'follow'
               };
               
-              fetch(`https://localhost:44376/api/WorkScheduler/MNTC_update_work?JsonData=${JSON.stringify(formData)}`, requestOptions)
+              fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_update_work?JsonData=${JSON.stringify(formData)}`, requestOptions)
                 .then(response => console.log(response))
                 
         }

@@ -8,23 +8,22 @@ type propModel={
 const WorkReport:React.FC<propModel> = ({employees}) => {
     const[formData,setFormData]=useState({fromDate:0,toDate:0,employeeId:0,location:0})
     const[reportData,setReportData]=useState([])
-    const[dtStatus,setDtStatus]=useState(false)
-
-    //testing
-    const[dtState,setDtState]=useState();
+    const[dtStatus,setDtStatus]=useState(false)//to set the datatable is already declare or not
+    const[dtState,setDtState]=useState();//to keep the datatable object
 
     const handleChnages=(e:any)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
 
     const reportRun=()=>{
-        console.log(formData)
         if(formData.fromDate!=0 && formData.toDate!=0){
-            fetch(`https://localhost:44376/api/WorkScheduler/MNTC_work_report?Empid=${formData.employeeId}&FromDate=${formData.fromDate}&Location=${formData.location}&ToDate=${formData.toDate}`)
+            fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_work_report?Empid=${formData.employeeId}&FromDate=${formData.fromDate}&Location=${formData.location}&ToDate=${formData.toDate}`)
             .then((responce:any)=>responce.json()).then((data)=>{
                 console.log(data)
                 setReportData(data)
             })
+        }else{
+            alert("Date missing!")
         }
     }
 
