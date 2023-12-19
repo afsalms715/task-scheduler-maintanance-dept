@@ -1,7 +1,7 @@
+'use client'
 import React,{useEffect, useRef,useState} from 'react'
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons'
-import * as $ from 'jquery';
 import '../css/buttonStyle.css'
 //Datatable Modules
 import "datatables.net-dt/js/dataTables.dataTables"

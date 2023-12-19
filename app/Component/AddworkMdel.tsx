@@ -20,7 +20,7 @@ type propModel={
 
 const AddworkMdel:React.FC<propModel> = (props) => {
     const {modelShow,setModelShow,name,desig,id,setTempDB,tempDB,workDetl,startTime,endTime,workLocation,isUpdate,workId,workDate}=props
-    const[formData,setFormData]=useState({workId:workId,id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation,Id:0})
+    const[formData,setFormData]:any=useState({workId:workId,id,name:name,desig:desig,endTime:endTime,startTime:startTime,workTime:"",workDetails:workDetl,workLocation,Id:0})
     
     //values save when changes happen
     const handleChanges=(e:any)=>{
@@ -47,7 +47,7 @@ const AddworkMdel:React.FC<propModel> = (props) => {
         const hours = Math.floor(differenceInMillis / (1000 * 60 * 60));
         const minutes = Math.floor((differenceInMillis % (1000 * 60 * 60)) / (1000 * 60));
         setFormData({...formData,workTime:`${hours} H:${minutes} M`})
-    },[formData.endTime,formData.startTime])
+    },[formData.startTime,formData.endTime])
 
     const saveWork=()=>{
         if(formValidation()){

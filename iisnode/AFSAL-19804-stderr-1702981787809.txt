@@ -1,0 +1,50 @@
+(node:19804) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ⨯ upstream image response failed for /_next/static/media/grand-logo.dc7baabf.png TypeError: fetch failed
+    at Object.fetch (node:internal/deps/undici/undici:11372:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async invokeRequest (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\lib\server-ipc\invoke-request.js:17:12)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:595:35
+    at async imageOptimizer (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\image-optimizer.js:576:13)
+    at async cacheEntry.imageResponseCache.get.incrementalCache (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:176:65)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\response-cache\index.js:90:36
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\lib\batcher.js:41:32 {
+  cause: AggregateError
+      at internalConnectMultiple (node:net:1114:18)
+      at afterConnectMultiple (node:net:1667:5) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+ImageError: "url" parameter is valid but upstream response is invalid
+    at imageOptimizer (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\image-optimizer.js:588:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async cacheEntry.imageResponseCache.get.incrementalCache (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:176:65)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\response-cache\index.js:90:36
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\lib\batcher.js:41:32 {
+  statusCode: 500
+}
+ ⨯ upstream image response failed for /_next/static/media/grand-logo.dc7baabf.png TypeError: fetch failed
+    at Object.fetch (node:internal/deps/undici/undici:11372:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async invokeRequest (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\lib\server-ipc\invoke-request.js:17:12)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:595:35
+    at async imageOptimizer (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\image-optimizer.js:576:13)
+    at async cacheEntry.imageResponseCache.get.incrementalCache (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:176:65)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\response-cache\index.js:90:36
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\lib\batcher.js:41:32 {
+  cause: AggregateError
+      at internalConnectMultiple (node:net:1114:18)
+      at afterConnectMultiple (node:net:1667:5) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+ImageError: "url" parameter is valid but upstream response is invalid
+    at imageOptimizer (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\image-optimizer.js:588:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async cacheEntry.imageResponseCache.get.incrementalCache (D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\next-server.js:176:65)
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\server\response-cache\index.js:90:36
+    at async D:\AFSAL\Nextjs\task-scheduler-maintanance-dept\node_modules\next\dist\lib\batcher.js:41:32 {
+  statusCode: 500
+}
