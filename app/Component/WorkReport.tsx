@@ -1,6 +1,7 @@
 'use client'
 import React,{useState,useEffect} from 'react'
 import Datatable from './Datatable'
+import NormalTable from './NormalTable';
 
 type propModel={
     employees:any;
@@ -16,9 +17,10 @@ const WorkReport:React.FC<propModel> = ({employees}) => {
         setFormData({...formData,[e.target.name]:e.target.value})
     }
 
-    const reportRun=()=>{
+    const reportRun= async()=>{
         if(formData.fromDate!=0 && formData.toDate!=0){
-            fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_work_report?Empid=${formData.employeeId}&FromDate=${formData.fromDate}&Location=${formData.location}&ToDate=${formData.toDate}`)
+            //console.log(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_work_report?Empid=${formData.employeeId}&FromDate=${formData.fromDate}&Location=${formData.location}&ToDate=${formData.toDate}`)
+            await fetch(`http://192.168.51.252/MNTC_SCHEDULER_API/api/WorkScheduler/MNTC_work_report?Empid=${formData.employeeId}&FromDate=${formData.fromDate}&Location=${formData.location}&ToDate=${formData.toDate}`)
             .then((responce:any)=>responce.json()).then((data)=>{
                 console.log(data)
                 setReportData(data)
@@ -43,7 +45,7 @@ const WorkReport:React.FC<propModel> = ({employees}) => {
                 <div className='ml-1'>
                     <label className='text-sm block'>Employee</label>
                     <select name='employeeId' onChange={(e)=>handleChnages(e)} className='border w-60 p-[5px] text-sm rounded-md'>
-                        <option value="">select</option>
+                        <option value="0">select</option>
                         {employees.map((item:any,index:number)=>{
                             return <option key={index} value={item.id}>{item.name}</option>
                         })}
@@ -68,7 +70,8 @@ const WorkReport:React.FC<propModel> = ({employees}) => {
                 </div>
             </div>
         </div>
-        {<Datatable reportData={reportData} dtStatus={dtStatus} setDtStatus={setDtStatus} setDtState={setDtState} dtState={dtState}/>}
+        {/*<Datatable reportData={reportData} dtStatus={dtStatus} setDtStatus={setDtStatus} setDtState={setDtState} dtState={dtState}/>*/}
+        <NormalTable reportData={reportData} dtStatus={dtStatus} setDtStatus={setDtStatus} setDtState={setDtState} dtState={dtState}/>
     </div>
   )
 }
